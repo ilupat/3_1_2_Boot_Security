@@ -14,8 +14,8 @@
         <br/> Password:
         <input type="text" th:field="*{password}"/>
         <br/>
-        <input type="checkbox" name="roless" value="ROLE_USER"/> USER
-        <input type="checkbox" name="roless" value="ROLE_ADMIN"/> ADMIN
+        <input type="radio" name="roless" value="ROLE_USER" checked/> USER
+        <input type="radio" name="roless" value="ROLE_ADMIN"/> ADMIN
         <input type="submit" value="Save"/>
     </form>
     <a th:href="@{/logout}">Logout</a>

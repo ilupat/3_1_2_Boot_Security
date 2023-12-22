@@ -5,13 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import ru.kata.spring.boot_security.demo.dao.UserRepository;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -44,6 +48,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void edit(User user) {
+        if (ObjectUtils.isEmpty(user.getPassword())) {
+            userRepository.findById(user.getId()).map(User::getPassword).ifPresent(user::setPassword);
+            userRepository.save(user);
+            return;
+        }
         user.setPassword(bCrypt().encode(user.getPassword()));
         userRepository.save(user);
     }

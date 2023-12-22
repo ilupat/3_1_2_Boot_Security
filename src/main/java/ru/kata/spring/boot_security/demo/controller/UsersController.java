@@ -62,11 +62,13 @@ public class UsersController {
     public String editUser(@PathVariable("id") long id, ModelMap model) {
         model.addAttribute("user", userService.getById(id));
         model.addAttribute("roles", roleService.getAllRoles());
+
         return "editUser";
     }
 
     @PostMapping(value = "user/edit/{id}")
     public String editUser(@ModelAttribute User user, @RequestParam(value = "roless") String[] role) throws NotFoundException {
+
         Set<Role> rolesSet = new HashSet<>();
         for (String roles : role) {
             rolesSet.add((roleService.getByName(roles)));
