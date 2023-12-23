@@ -20,13 +20,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = null;
+        User user;
         try {
             user = userService.getByName(s);
         } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-        if (user == null) {
             throw new UsernameNotFoundException("Unknown user: " + s);
         }
         return user;

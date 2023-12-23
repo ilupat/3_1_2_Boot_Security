@@ -29,13 +29,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/registration").permitAll()
                 .antMatchers("/", "/user")
                 .hasAnyRole("ADMIN, USER")
                 .antMatchers("/**")
                 .hasAnyRole("ADMIN")
                 .and()
-                .formLogin() // Spring сам подставит свою логин форму
-                .successHandler(successUserHandler) // подключаем наш SuccessHandler для перенеправления по ролям
+                .formLogin() //
+                .successHandler(successUserHandler) //
                 .permitAll()
                 .and()
                 .logout()

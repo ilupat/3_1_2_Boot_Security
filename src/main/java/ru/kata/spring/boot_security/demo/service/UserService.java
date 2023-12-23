@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.service;
 
-
 import javassist.NotFoundException;
 import ru.kata.spring.boot_security.demo.model.User;
 

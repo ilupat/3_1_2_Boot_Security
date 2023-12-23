@@ -5,11 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RegistrationService;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.util.UserValidator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,11 +22,32 @@ import java.util.Set;
 public class UsersController {
     private final UserService userService;
     private final RoleService roleService;
+    private final UserValidator userValidator;
+    private final RegistrationService registrationService;
 
     @Autowired
-    public UsersController(UserService userService, RoleService roleService) {
+    public UsersController(UserService userService, RoleService roleService, UserValidator userValidator, RegistrationService registrationService) {
         this.userService = userService;
         this.roleService = roleService;
+        this.userValidator = userValidator;
+        this.registrationService = registrationService;
+    }
+
+    @GetMapping("registration")
+    public String registrationPage(@ModelAttribute("user") User user) {
+        return "registration";
+    }
+
+    @PostMapping("registration")
+    public String performRegistration(@ModelAttribute("user") User user,
+                                      BindingResult bindingResult) {
+
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()){
+            return "registration";
+        }
+        registrationService.registe(user);
+        return "redirect:login";
     }
 
     @GetMapping("admin")
