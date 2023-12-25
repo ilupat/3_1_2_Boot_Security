@@ -9,14 +9,17 @@
     <h2>Edit User</h2>
     <form th:action="@{/user/edit/{id}(id=${user.id})}" th:object="${user}" method="post">
         <br/> Name:
-        <input type="text" th:field="*{username}"/>
+        <input type="text" th:field="*{username}" required/>
         <br/> Email:
-        <input type="text" th:field="*{email}"/>
+        <input type="text" th:field="*{email}" required/>
         <br/> Password:
         <input type="password" th:field="*{password}"/>
         <br/>
-        <input type="checkbox" name="roless" value="ROLE_USER" th:checked="${user.roles.toString().contains('ROLE_USER')}"/> USER
-        <input type="checkbox" name="roless" value="ROLE_ADMIN" th:checked="${user.roles.toString().contains('ROLE_ADMIN')}"/> ADMIN
+        <select size="3" multiple="multiple" name="roless" id="roless"  required>
+            <option disabled>Roles:</option>
+            <option value="ROLE_USER" th:selected="${user.roles.toString().contains('ROLE_USER')}">USER</option>
+            <option value="ROLE_ADMIN" th:selected="${user.roles.toString().contains('ROLE_ADMIN')}">ADMIN</option>
+        </select>
         <br/>
         <input type="submit" value="Update User"/>
     </form>

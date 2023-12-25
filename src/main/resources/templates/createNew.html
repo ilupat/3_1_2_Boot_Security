@@ -8,16 +8,23 @@
 <div align="center">
     <form th:action="@{/user/new}" th:object="${user}" method="post">
         <br/> Name:
-        <input type="text" th:field="*{username}"/>
+        <input type="text" th:field="*{username}" required/>
         <br/> Email:
-        <input type="text" th:field="*{email}"/>
+        <input type="text" th:field="*{email}" required/>
         <br/> Password:
-        <input type="text" th:field="*{password}"/>
+        <input type="text" th:field="*{password}" required/>
         <br/>
-        <input type="checkbox" name="roless" value="ROLE_USER" checked/> USER
-        <input type="checkbox" name="roless" value="ROLE_ADMIN"/> ADMIN
+        <select size="3" multiple="multiple" name="roless" id="roless"  required>
+            <option disabled>Roles:</option>
+            <option value="ROLE_USER">USER</option>
+            <option value="ROLE_ADMIN">ADMIN</option>
+        </select>
+        <br/>
         <input type="submit" value="Save"/>
+        <br/>
     </form>
+    <a th:href="@{/admin}">Admin panel</a>
+    <br/>
     <a th:href="@{/logout}">Logout</a>
 </div>
 </body>
