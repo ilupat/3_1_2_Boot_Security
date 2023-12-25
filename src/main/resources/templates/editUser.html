@@ -15,8 +15,8 @@
         <br/> Password:
         <input type="password" th:field="*{password}"/>
         <br/>
-        <input type="radio" name="roless" value="ROLE_USER" checked/> USER
-        <input type="radio" name="roless" value="ROLE_ADMIN"/> ADMIN
+        <input type="checkbox" name="roless" value="ROLE_USER" th:checked="${user.roles.toString().contains('ROLE_USER')}"/> USER
+        <input type="checkbox" name="roless" value="ROLE_ADMIN" th:checked="${user.roles.toString().contains('ROLE_ADMIN')}"/> ADMIN
         <br/>
         <input type="submit" value="Update User"/>
     </form>
